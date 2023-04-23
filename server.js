@@ -13,6 +13,18 @@ app.get("/", (req,res) => {
     res.send("Welcome to an Awesome App about Breads");
 });
 
+// Bread ROUTES
+const breadsController= require("./controllers/breads_controller.js");
+app.use("/breads",breadsController);
+
+/* 
+
+Express:
+localhost:3003/-> "Welcome to an Awesome App about Breads!"
+localhost:3003/breads {/}-> breadsController ?
+*/
+
+//LISTEN
 app.listen(PORT, () => {
     console.log("Server is listening on port", PORT);
 });
