@@ -14,8 +14,16 @@ breads.get("/", (req,res) =>{
 // READ ONE?
 breads.get("/:arrayIndex", (req,res)=>{
    const arrayIndex =req.params.arrayIndex;
-   res.send(Bread[arrayIndex]);
-})
+   if(Bread[arrayIndex]){
+      res.render("show", {
+         bread:Bread[arrayIndex],
+   });
+ } else {
+      res.send("404");
+   }
+   
+});
+
 // EXPORT
 module.exports = breads;
 
