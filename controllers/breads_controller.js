@@ -11,6 +11,10 @@ breads.get("/", (req,res) =>{
    });
 });
 
+breads.get("/new", (req,res)=>{
+   res.render("new");
+});
+
 // READ ONE?
 breads.get("/:arrayIndex", (req,res)=>{
    const arrayIndex =req.params.arrayIndex;
@@ -23,6 +27,24 @@ breads.get("/:arrayIndex", (req,res)=>{
    }
    
 });
+//CREATE
+breads.post("/",(req,res)=>{
+   let newBread ={...req.body}; 
+   if (newBread.hasGluten === "on"){
+      newBread.hasGluten= true;
+   } else if 
+     (newBread.hasGluten === "off"){
+     
+      newBread.hasGluten= false;
+   }else {
+      console.error("Error: hasGluten value is", newBread.hasGluten);
+
+     }
+     Bread.push(newBread);
+     res.redirect("/breads");
+     
+   }
+);
 
 // EXPORT
 module.exports = breads;
