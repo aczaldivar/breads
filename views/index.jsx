@@ -13,9 +13,9 @@ const Index = ({breads}) => {
             </a>
         </div>
         <ul>
-            {breads.map((bread, index) => (
-               <li key= {index}>
-                <a href= {`/breads/${index}`}>{bread.name}</a>
+            {breads.map((bread) => (
+               <li key= {bread.id}>
+                <a href= {`/breads/${bread.id}`}>{bread.name}</a>
                </li>
                
             ))}
