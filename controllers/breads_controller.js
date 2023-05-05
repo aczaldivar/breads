@@ -17,12 +17,14 @@ breads.get("/new", (req, res) => {
     res.render("new");
 });
 
-// EDIT
-breads.get("/:arrayIndex/edit", (req, res) => {
-    const arrayIndex = req.params.arrayIndex;
-    res.render("edit", {
-        bread: Bread[arrayIndex],
-        index: arrayIndex,
+// EDIT bread form
+breads.get("/:id/edit", (req, res) => {
+    const id = req.params.id;
+    Bread.findById(id).then(foundBread=>{
+        res.render("edit", {
+        bread: foundBread,
+       
+        });
     });
 });
 
@@ -75,8 +77,8 @@ breads.post("/", (req, res) => {
 });
 
 // UPDATE
-breads.put("/:arrayIndex", (req, res) => {
-    const arrayIndex = req.params.arrayIndex;
+breads.put("/:id", (req, res) => {
+    const id = req.params.id;
     let updatedBread = { ...req.body };
     // Default bread image
     if (updatedBread.image === "") {
@@ -86,20 +88,23 @@ breads.put("/:arrayIndex", (req, res) => {
     // Process hasGluten checkbox
     if (updatedBread.hasGluten === "on") {
         updatedBread.hasGluten = true;
-    } else if (updatedBread.hasGluten === "off") {
+    } else { (updatedBread.hasGluten === "off") 
         updatedBread.hasGluten = false;
-    } else {
-        console.error("Error: hasGluten value is:", updatedBread.hasGluten);
     }
-    Bread[arrayIndex] = updatedBread;
-    res.redirect(`/breads/${arrayIndex}`);
+    
+    Bread.findByIdAndUpdate(id,updatedBread,{new: true }).then(updatedBread =>{
+        console.log(updatedBread);
+        res.redirect(`/breads/${id}`);
+    });
+    
 });
 
 // DELETE
-breads.delete("/:arrayIndex", (req, res) => {
-    const arrayIndex = req.params.arrayIndex;
-    Bread.splice(arrayIndex, 1);
-    res.status(303).redirect("/breads");
+breads.delete("/:id", (req, res) => {
+    const id = req.params.id;
+    Bread.findByIdAndDelete(id).then((deletedBread) => {
+        res.status(303).redirect('/breads');
+    });
 });
 
 // EXPORT
