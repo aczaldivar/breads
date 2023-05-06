@@ -80,20 +80,20 @@ breads.post("/", (req, res) => {
 // UPDATE
 breads.put("/:id", (req, res) => {
     const id = req.params.id;
-    let updatedBread = { ...req.body };
+    let updateBread = { ...req.body };
     // Default bread image
-    if (updatedBread.image === "") {
-        updatedBread.image =
+    if (updateBread.image === "") {
+        updateBread.image =
             "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80";
     }
     // Process hasGluten checkbox
-    if (updatedBread.hasGluten === "on") {
-        updatedBread.hasGluten = true;
-    } else { (updatedBread.hasGluten === "off") 
-        updatedBread.hasGluten = false;
+    if (updateBread.hasGluten === "on") {
+        updateBread.hasGluten = true;
+    } else { (updateBread.hasGluten === "off") 
+        updateBread.hasGluten = false;
     }
     
-    Bread.findByIdAndUpdate(id,updatedBread,{new: true }).then(updatedBread =>{
+    Bread.findByIdAndUpdate(id,updateBread,{new: true }).then(updatedBread =>{
         console.log(updatedBread);
         res.redirect(`/breads/${id}`);
     });
