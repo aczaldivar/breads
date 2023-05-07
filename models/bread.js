@@ -20,9 +20,17 @@ const breadSchema = new Schema({
     });
 
 // helper methods 
-breadSchema.methods.getBakedBy = function(){
-  return `${this.name} was baked with love by ${this.baker}`
-}
+breadSchema.methods.getBakedBy = function () {
+  let bakedByMessage = `${this.name} bread was baked with ♥️ by `;
+  if (this.baker && this.baker.name && this.baker.startDate) {
+      bakedByMessage +=
+          `${this.baker.name}, ` +
+          `who has been with us since ${this.baker.startDate.getFullYear()}.`;
+  } else {
+      bakedByMessage += "an unknown baker";
+  }
+  return bakedByMessage;
+};
 
 
 //create bread model

@@ -24,6 +24,14 @@ breads.get("/new", (req, res) => {
 // EDIT bread form
 breads.get("/:id/edit", (req, res) => {
     const id = req.params.id;
+    Baker.find().then((foundBakers)=>{
+        Bread.findById(id).then((foundBread)=>{
+            res.render("edit",{
+                bread: foundBread,
+                bakers: foundBakers,
+        })
+        })
+    })
     Bread.findById(id).then(foundBread=>{
         res.render("edit", {
         bread: foundBread,
@@ -35,7 +43,9 @@ breads.get("/:id/edit", (req, res) => {
 //READ ONE -SHOW
 breads.get("/:id", (req,res)=>{
     const id = req.params.id;
-    Bread.findById(id).then((foundBread)=>{
+    Bread.findById(id)
+    .populate("baker")
+    .then((foundBread)=>{
         if (foundBread ===null){
             res.send("404 - Bread not found");
         }else {
