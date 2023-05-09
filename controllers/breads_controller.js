@@ -6,14 +6,26 @@ const Baker = require("../models/baker.js");
 
 // INDEX - READ ALL
 breads.get("/", (req, res) => {
-    Bread.find().then(foundBreads=>{
+    Baker.find(foundBakers=>{
+
+    })
+    .then()
+    Baker.find().then((foundBakers)=>{
+        Bread.find().then(foundBreads=>{
         res.render("index", {
         breads: foundBreads,
+        bakers: foundBakers,
+        title:"Index Page",
         });
+            
+        
+    });
+    
     });
     
 });
 
+// NEW bread form
 breads.get("/new", (req, res) => {
     Baker.find().then((foundBakers)=>{
      res.render("new",{title:"New Bread", bakers:foundBakers });   
@@ -29,16 +41,12 @@ breads.get("/:id/edit", (req, res) => {
             res.render("edit",{
                 bread: foundBread,
                 bakers: foundBakers,
-        })
-        })
-    })
-    Bread.findById(id).then(foundBread=>{
-        res.render("edit", {
-        bread: foundBread,
-       
+        });
         });
     });
-});
+        });
+    
+
 
 //READ ONE -SHOW
 breads.get("/:id", (req,res)=>{
@@ -51,7 +59,8 @@ breads.get("/:id", (req,res)=>{
         }else {
         console.log(foundBread.getBakedBy());
         res.render("show", {
-          bread: foundBread,  
+          bread: foundBread, 
+          
         });
         }
     })

@@ -1,5 +1,6 @@
 const mongoose = require ("mongoose");
 const {Schema} = mongoose;
+const Bread = require("./bread.js");
 
 const bakerSchema = new Schema ({
     name: { 
@@ -10,6 +11,14 @@ const bakerSchema = new Schema ({
     startDate: { type: Date, required: true },
     bio: { type: String },
 
+}, {toJSON:{virtuals:true}}
+);
+
+//VIRTUALS
+bakerSchema.virtual("breads",{
+    ref:"Bread", 
+    localField:"_id",
+    foreignField:"baker",
 });
 
 const Baker = mongoose.model("Baker",bakerSchema);
