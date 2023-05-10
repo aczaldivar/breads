@@ -20,7 +20,7 @@ bakers.get("/", (req,res)=>{
     });
 });
 
-// DELETE-SHOW PAGE
+// DETAIL-SHOW PAGE
 bakers.get("/:id", (req, res) => {
     const id = req.params.id;
     Baker.findById(id)
@@ -30,6 +30,13 @@ bakers.get("/:id", (req, res) => {
         });
 });
 
+//DELETE
+bakers.delete("/:id", (req,res)=>{
+    const id = req.params.id;
+    Baker.findByIdAndDelete(id).then((deleteBaker)=>{
+        res.status(303).redirect("/breads")
+    });
+});
 
 module.exports = bakers;
 
