@@ -5,22 +5,22 @@ const Bread = require("../models/bread.js");
 const Baker = require("../models/baker.js");
 
 // INDEX - READ ALL
-breads.get("/", (req, res) => {
-    Baker.find(foundBakers=>{
-
-    })
-    .then()
+breads.get("/", async (req, res) => {
+    const foundBreads = await Bread.find().limit(2);
+    const foundBakers = await Baker.find();
+    res.render("index", {
+        breads: foundBreads,
+        bakers: foundBakers,
+        title:"Index Page",
+        });  
     Baker.find().then((foundBakers)=>{
         Bread.find().then(foundBreads=>{
         res.render("index", {
         breads: foundBreads,
         bakers: foundBakers,
         title:"Index Page",
-        });
-            
-        
+        });  
     });
-    
     });
     
 });

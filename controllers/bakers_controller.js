@@ -12,7 +12,9 @@ bakers.get("/data/seed",(req,res)=>{
 });
 
 //INDEX -READ ALL
-bakers.get("/", (req,res)=>{
+bakers.get("/", async (req,res)=>{
+    const foundBreads =await Bread.find().limit(10).lean();
+    const foundBakers= await Baker.find().lean();
     Baker.find()
     .populate("breads")
     .then((foundBakers)=>{
@@ -24,7 +26,10 @@ bakers.get("/", (req,res)=>{
 bakers.get("/:id", (req, res) => {
     const id = req.params.id;
     Baker.findById(id)
-        .populate("breads")
+        .populate({
+            path:'breads',
+            options:{limit:2}
+        })
         .then((foundBaker) => {
             res.render("bakerShow", { baker: foundBaker });
         });
